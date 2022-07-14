@@ -7,19 +7,41 @@ namespace Visuals
     public class MoveTerrain : MonoBehaviour
     {
         [Header("Movement Variables")]
-        
-        [Range(0.1f, 100f)]
-        [Tooltip("How fast does the parallax move?")]
-        public float moveSpeed;
-        
+        [Tooltip("The maximum speed the terrain can go to")]
+        public float maxMoveSpeed;
+
         [Tooltip("What is the move modifier for the plane group?")]
         public Vector3 moveTranslation;
 
         [Tooltip("What is the disitance between each plane group?")]
         public Vector3 addPlacement;
 
-        // Private Variable
+        // Private Variables
         private LinkedList<GameObject> pairedTerrainLL = new LinkedList<GameObject>();      // List of all plane groups
+        private float originalSpeed;                                                        // The original move speed of the terrain
+        
+        [SerializeField]
+        private float currMoveSpeed;                                                        // The current speed the terrain is moving
+
+        public float CurrMoveSpeed
+        {
+            get { return currMoveSpeed; }
+            set
+            {
+                if (value >= maxMoveSpeed)
+                {
+                    currMoveSpeed = maxMoveSpeed;
+                }
+                else if (value < 0)
+                {
+                    currMoveSpeed = 0f;
+                }
+                else
+                {
+                    currMoveSpeed = value;
+                }
+            }
+        }
 
         // Sets up variables and the Linked List
         private void Start()
@@ -28,12 +50,13 @@ namespace Visuals
             {
                 pairedTerrainLL.AddLast(gameObject.transform.GetChild(i).gameObject);
             }
+            originalSpeed = currMoveSpeed;
         }
 
         private void FixedUpdate()
         {
             // Translates the ground group
-            gameObject.transform.position += moveTranslation * moveSpeed;
+            gameObject.transform.position += moveTranslation * currMoveSpeed;
         }
 
         // Method to move the firstmost terrain piece to the back of the linked list
@@ -50,5 +73,6 @@ namespace Visuals
 
             Debug.Log("Moving Group" + firstObj.Value.gameObject.name + " to back.");
         }
+    
     }
 }
