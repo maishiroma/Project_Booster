@@ -1,7 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using Visuals;
 
 namespace Gimmick
 {
@@ -10,12 +9,11 @@ namespace Gimmick
         [Header("External References")]
         [Tooltip("Reference to the prefab that holds information on the Boost Panel")]
         public BoostPanel boostPanelPrefab;
-        [Tooltip("Reference to an Empty GameObject that will hold all of the boost panels")]
-        public GameObject boostPanelParent;
+
+        [Tooltip("Reference to the object that will be spawning objects in the level")]
+        public TerrainParallexScroll cleanupObj;
 
         [Header("Spawn Variables")]
-        [Tooltip("Translation modifier that will be applied to the spawned object")]
-        public Vector3 spawnTransform;
         [Tooltip("Min time it take for an object to spawn")]
         public float minTimeToSpawn;
         [Tooltip("Max time it takes for an object to spawn")]
@@ -29,7 +27,8 @@ namespace Gimmick
         private float timeToSpawn;      // How long does it take for another object to spawn?
         private float currTimePassed;   // How much time has passed since the last object spawned?
 
-        private List<int> childIndexTaken = new List<int>();            // List of indexes that will be used as spawn points
+        private List<Transform> spawnPos = new List<Transform>();       // List of objs that represent locations that are valid spawn points
+        private List<int> spawnPosIndex = new List<int>();            // List of unique indexes that correspond to indexes in spawnPos
 
         // Setting up private variables
         private void Start()
@@ -44,42 +43,56 @@ namespace Gimmick
             currTimePassed += Time.fixedDeltaTime;
             if (currTimePassed >= timeToSpawn)
             {
+                GetNewSpawnPos();
                 GetRandomChildIndexs();
                 SpawnObjects();
+                
                 timeToSpawn = Random.Range(minTimeToSpawn, maxTimeToSpawn);
                 currTimePassed = 0f;
             }
         }
 
-        // Helper method to spawn a new object
-        private void SpawnObjects()
+        // Dynamically grabs the valid spawn points of the level and fills in the spawnPos
+        private void GetNewSpawnPos()
         {
-            // TODO: Once I get the hazard in, we need to make some logic to randomly choose between hazards and boost panels
-            foreach (int currChildIndex in childIndexTaken)
+            spawnPos.Clear();
+            GameObject lastTerrain = cleanupObj.GetLastTerrain();
+            for (int rootChildIndex = 0; rootChildIndex < lastTerrain.transform.childCount; ++rootChildIndex)
             {
-                Transform selectedWayPoint = gameObject.transform.GetChild(currChildIndex);
-                Vector3 spawnLoc = selectedWayPoint.position + spawnTransform;
-                BoostPanel newObj = GameObject.Instantiate(boostPanelPrefab, spawnLoc, selectedWayPoint.rotation, boostPanelParent.transform);
+                Transform currRootChild = lastTerrain.transform.GetChild(rootChildIndex);
+                for (int subChildIndex = 0; subChildIndex < currRootChild.childCount; ++subChildIndex)
+                {
+                    spawnPos.Add(currRootChild.GetChild(subChildIndex).GetChild(0));
+                }
             }
         }
 
-        // When called, clears the previous index list and prepares a new one, with unique index values
+        // We fill in spawnPosIndex with indexes that correspond to spawnPos
         private void GetRandomChildIndexs()
         {
             int spawnCount = Random.Range(minSpawnCount, maxSpawnCount);
-            childIndexTaken.Clear();
-            while(spawnCount > 0)
+            spawnPosIndex.Clear();
+            while (spawnCount > 0)
             {
-                int ranIndex = Random.Range(0, gameObject.transform.childCount);
-                while (childIndexTaken.Contains(ranIndex))
+                int ranIndex = Random.Range(0, spawnPos.Count);
+                while (spawnPosIndex.Contains(ranIndex))
                 {
-                    ranIndex = Random.Range(0, gameObject.transform.childCount);
+                    ranIndex = Random.Range(0, spawnPos.Count);
                 }
-                childIndexTaken.Add(ranIndex);
+                spawnPosIndex.Add(ranIndex);
                 --spawnCount;
             }
+        }
 
+        // We spawn objects at their corresponding locations that we found earlier
+        private void SpawnObjects()
+        {
+            // TODO: Once I get the hazard in, we need to make some logic to randomly choose between hazards and boost panels
+            foreach (int currChildIndex in spawnPosIndex)
+            {
+                Transform selectedWayPoint = spawnPos[currChildIndex];
+                GameObject.Instantiate(boostPanelPrefab, selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
+            }
         }
     }
-
 }

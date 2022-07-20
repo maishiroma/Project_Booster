@@ -139,7 +139,6 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 875f84aa0c596c2499c9d00620a3c997, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currMoveSpeed: 0
-  speedBoostModifier: 0.1
+  speedBoostModifier: 0.05
   applySpeedBoostTag: Player
-  backgroundTerrainTag: TerrainGroup
+  terrainGroupTag: TerrainGroup
