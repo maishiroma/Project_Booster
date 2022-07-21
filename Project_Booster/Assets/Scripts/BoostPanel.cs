@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Visuals;
+using Effects;
 
 namespace Gimmick
 {
@@ -20,8 +21,12 @@ namespace Gimmick
         [Tooltip("The name of the tag that is associated with the ground/terrain")]
         public string terrainGroupTag;
 
+        [Tooltip("The name of the tag associated with the main camera")]
+        public string mainCameraTag;
+
         // Private Variables
         private static TerrainMovement[] terrainGroups;       // An array of the terrain objects in the level; all boost panels share this information
+        private static CameraMovement mainCamera;           // Ref to the main camera object
 
         // This finds all of the terrain objects in the level and associates them to the private variable
         private void Start()
@@ -35,6 +40,11 @@ namespace Gimmick
                     terrainGroups[index] = temp[index].GetComponent<TerrainMovement>();
                 }
             }
+
+            if (mainCamera == null)
+            {
+                mainCamera = GameObject.FindGameObjectWithTag(mainCameraTag).GetComponent<CameraMovement>();
+            }
         }
 
         // If the specified object touches this, we "mock" the speed up by speeding up the terrain around the player
@@ -46,6 +56,7 @@ namespace Gimmick
                 {
                     currTerrain.CurrMoveSpeed += speedBoostModifier;
                 }
+                mainCamera.IsBoosting = true;
             }
         }
     }

@@ -142,3 +142,4 @@ MonoBehaviour:
   speedBoostModifier: 0.05
   applySpeedBoostTag: Player
   terrainGroupTag: TerrainGroup
+  mainCameraTag: MainCamera
