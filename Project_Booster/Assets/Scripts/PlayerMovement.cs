@@ -27,7 +27,7 @@ namespace Player
         private float currAcceleration;                                 // The current Acceleration the player is at
         
         private GameControls gameControls;                              // Ref to external control system to associate to this script
-        private Rigidbody2D rb2d;                                       // Ref to the RB that dictates the movement for this object
+        private Rigidbody rb2d;                                       // Ref to the RB that dictates the movement for this object
         
         // Activates all of the controls for the player
         private void Awake()
@@ -39,7 +39,7 @@ namespace Player
             gameControls.Player.HorizontalMovement.performed += ctx => Move(ctx);
             gameControls.Player.HorizontalMovement.canceled += ctx => Move(ctx);
 
-            rb2d = GetComponent<Rigidbody2D>();
+            rb2d = GetComponent<Rigidbody>();
         }
 
         // Enables the controls when the player is active

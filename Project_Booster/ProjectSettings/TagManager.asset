@@ -6,6 +6,8 @@ TagManager:
   tags:
   - PlayerWayPoint
   - Terrain
+  - Booster
+  - TerrainGroup
   layers:
   - Default
   - TransparentFX
