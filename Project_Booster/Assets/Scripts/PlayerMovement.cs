@@ -14,7 +14,7 @@ namespace Player
         [Tooltip("Values to change the player movement speed and how it works")]
         
         [Range(0.001f, 10f)]
-        public float accelerationSpeed;                                         // How fast does this object accelerate?
+        public float accelerationSpeed;                                 // How fast does this object accelerate?
         [Range(0.001f, 10f)]
         public float stopSpeed;                                         // How fast does this object stop?
         [Range(0.001f, 10f)]
@@ -27,8 +27,9 @@ namespace Player
         private float currAcceleration;                                 // The current Acceleration the player is at
         
         private GameControls gameControls;                              // Ref to external control system to associate to this script
-        private Rigidbody rb2d;                                       // Ref to the RB that dictates the movement for this object
-        
+        private Rigidbody rb2d;                                         // Ref to the RB that dictates the movement for this object
+        private bool isReverse;
+
         // Activates all of the controls for the player
         private void Awake()
         {
@@ -59,6 +60,9 @@ namespace Player
         {
             // We use the currNodeIndex as the starting location
             rb2d.position = pathNodes[currNodeIndex].position;
+            
+            // We set the reverse bool to be false by default
+            isReverse = false;
         }
 
         // This handles all movement logic for the player
@@ -81,7 +85,9 @@ namespace Player
                 currNodeIndex = GetProperNodeIndex(currNodeIndex + moveInput);
                 if (Mathf.Approximately(moveInput, 0f))
                 {
+                    // If the player stops on the new node
                     currAcceleration = 0f;
+                    isReverse = CheckNodeType(GetNodeInList(currNodeIndex).parent.gameObject);
                 }
             }
 
@@ -90,15 +96,16 @@ namespace Player
         }
 
         // Move context that reads in the input from the player
+        // Depending on isReverse, we do specific inputs
         private void Move(InputAction.CallbackContext ctx)
         {
             if (ctx.ReadValue<float>() < 0)
             {
-                moveInput = 1;
+                moveInput = isReverse ? -1 : 1;
             }
             else if (ctx.ReadValue<float>() > 0)
             {
-                moveInput = -1;
+                moveInput = isReverse ? 1 : -1;
             }
             else
             {
@@ -137,6 +144,20 @@ namespace Player
             else
             {
                 return index;
+            }
+        }
+
+        // Checks if the passed WayPoint is considered a Top Node
+        // If so, we set return either true or false
+        private bool CheckNodeType(GameObject playerWayPoint)
+        {
+            if(playerWayPoint.name.Contains("Top"))
+            {
+                return true;
+            }
+            else
+            {
+                return false;
             }
         }
     }
