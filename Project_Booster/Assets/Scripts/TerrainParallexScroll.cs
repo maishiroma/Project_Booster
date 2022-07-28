@@ -56,11 +56,11 @@ namespace Gimmick
         // We select all of the gimicks in the specified terrain object and removes them
         private void DeleteGimmicksInTerrain(GameObject firstObj)
         {
-            BoostPanel[] children = firstObj.GetComponentsInChildren<BoostPanel>();
-            foreach (BoostPanel currOne in children)
+            SpawnObj[] children = firstObj.GetComponentsInChildren<SpawnObj>();
+            foreach (SpawnObj currOne in children)
             {
                 Destroy(currOne.gameObject);
-            }
+            }           
         }
 
         // Helper method to get tthe last paired terrain value

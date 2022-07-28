@@ -8,7 +8,7 @@ namespace Gimmick
     {
         [Header("External References")]
         [Tooltip("Reference to the prefab that holds information on the Boost Panel")]
-        public BoostPanel boostPanelPrefab;
+        public SpawnObj[] spawnObjPrefabs;
 
         [Tooltip("Reference to the object that will be spawning objects in the level")]
         public TerrainParallexScroll cleanupObj;
@@ -91,7 +91,16 @@ namespace Gimmick
             foreach (int currChildIndex in spawnPosIndex)
             {
                 Transform selectedWayPoint = spawnPos[currChildIndex];
-                GameObject.Instantiate(boostPanelPrefab, selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
+                if (Random.Range(1,10) >= 7)
+                {
+                    // Boost Panel
+                    GameObject.Instantiate(spawnObjPrefabs[0], selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
+                }
+                else
+                {
+                    // Hazard
+                    GameObject.Instantiate(spawnObjPrefabs[1], selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
+                }
             }
         }
     }
