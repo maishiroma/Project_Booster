@@ -2,19 +2,20 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Visuals;
-using Effects;
 
 namespace Gimmick
 {
-    public class BoostPanel : SpawnObj
+    public class Hazard : SpawnObj
     {
+
+        // If interacted, the player will move slower
         protected override void Effect()
         {
             foreach (TerrainMovement currTerrain in terrainGroups)
             {
                 currTerrain.CurrMoveSpeed += effectModifier;
             }
-            mainCamera.IsBoosting = true;
+            mainCamera.IsBoosting = false;
         }
     }
 }

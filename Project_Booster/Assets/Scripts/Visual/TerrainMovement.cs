@@ -10,6 +10,9 @@ namespace Visuals
         [Tooltip("The maximum speed the terrain can go to")]
         public float maxMoveSpeed;
 
+        [Tooltip("The min speed the terrain can go to")]
+        public float minMoveSpeed;
+
         [SerializeField]
         private float currMoveSpeed;                                                        // The current speed the terrain is moving
 
@@ -23,9 +26,9 @@ namespace Visuals
                 {
                     currMoveSpeed = maxMoveSpeed;
                 }
-                else if (value < 0)
+                else if (value < minMoveSpeed)
                 {
-                    currMoveSpeed = 0f;
+                    currMoveSpeed = minMoveSpeed;
                 }
                 else
                 {
