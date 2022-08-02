@@ -6,17 +6,15 @@ using Effects;
 
 namespace Gimmick
 {
-    public class BoostPanel : MonoBehaviour
+    public abstract class SpawnObj : MonoBehaviour
     {
-        [Header("General Variables")]
-        
         [Tooltip("The speed buff that the panel grants when touched")]
-        public float speedBoostModifier;
+        public float effectModifier;
 
         [Space]
 
         [Tooltip("The name of the tag to check to apply the boost towards")]
-        public string applySpeedBoostTag;
+        public string colliderTagCheck;
 
         [Tooltip("The name of the tag that is associated with the ground/terrain")]
         public string terrainGroupTag;
@@ -24,9 +22,9 @@ namespace Gimmick
         [Tooltip("The name of the tag associated with the main camera")]
         public string mainCameraTag;
 
-        // Private Variables
-        private static TerrainMovement[] terrainGroups;       // An array of the terrain objects in the level; all boost panels share this information
-        private static CameraMovement mainCamera;           // Ref to the main camera object
+        // protected Variables
+        protected static TerrainMovement[] terrainGroups;       // An array of the terrain objects in the level; all boost panels share this information
+        protected static CameraMovement mainCamera;           // Ref to the main camera object
 
         // This finds all of the terrain objects in the level and associates them to the private variable
         private void Start()
@@ -50,14 +48,14 @@ namespace Gimmick
         // If the specified object touches this, we "mock" the speed up by speeding up the terrain around the player
         private void OnTriggerEnter(Collider other)
         {
-            if(other.CompareTag(applySpeedBoostTag))
+            if (other.CompareTag(colliderTagCheck))
             {
-                foreach(TerrainMovement currTerrain in terrainGroups)
-                {
-                    currTerrain.CurrMoveSpeed += speedBoostModifier;
-                }
-                mainCamera.IsBoosting = true;
+                Effect();
             }
         }
+
+        // The method that all objects should implement, since this will be ran once the detection has hit
+        protected abstract void Effect();
     }
+
 }

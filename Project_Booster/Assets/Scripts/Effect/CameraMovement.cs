@@ -37,6 +37,11 @@ namespace Effects
                     // If we are boosting again, we reset the timer for boosting
                     timeBoostEffect = 0f;
                 }
+                else if (value == false)
+                {
+                    // If we for some reason are not boosting anymore, we stop the time boost effet
+                    timeBoostEffect = 0f;
+                }
                 isBoosting = value;
             }
         }

@@ -1095,6 +1095,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
+  minMoveSpeed: 0.1
   currMoveSpeed: 0.1
 --- !u!54 &263710966
 Rigidbody:
@@ -4567,6 +4568,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
+  minMoveSpeed: 0.1
   currMoveSpeed: 0.1
 --- !u!54 &1100291153
 Rigidbody:
@@ -6763,7 +6765,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e417ad356bb433347a288a4e18e7e3a7, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  boostPanelPrefab: {fileID: 6281583940021087550, guid: 81c60ec9a86bc504081b38f7e51b5127, type: 3}
+  spawnObjPrefabs:
+  - {fileID: 6281583940021087550, guid: 81c60ec9a86bc504081b38f7e51b5127, type: 3}
+  - {fileID: 2061984222319741365, guid: 6a4fa33113c325e4bbdf413fb12b29b6, type: 3}
   cleanupObj: {fileID: 1766600683}
   minTimeToSpawn: 3
   maxTimeToSpawn: 7
@@ -7156,6 +7160,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
+  minMoveSpeed: 0.1
   currMoveSpeed: 0.1
 --- !u!54 &1753992951
 Rigidbody:
@@ -7897,6 +7902,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
+  minMoveSpeed: 0.1
   currMoveSpeed: 0.1
 --- !u!54 &1908739079
 Rigidbody:
@@ -8186,6 +8192,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
+  minMoveSpeed: 0.1
   currMoveSpeed: 0.1
 --- !u!4 &1955874493
 Transform:
@@ -8362,6 +8369,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
+  minMoveSpeed: 0.1
   currMoveSpeed: 0.1
 --- !u!54 &1966563037
 Rigidbody:
