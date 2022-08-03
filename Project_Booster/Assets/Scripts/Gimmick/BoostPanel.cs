@@ -15,6 +15,7 @@ namespace Gimmick
                 currTerrain.CurrMoveSpeed += effectModifier;
             }
             mainCamera.IsBoosting = true;
+            scoreSystem.InvokeComboTime();
         }
     }
 }
