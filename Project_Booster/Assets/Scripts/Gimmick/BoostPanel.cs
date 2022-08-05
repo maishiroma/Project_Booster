@@ -8,7 +8,7 @@ namespace Gimmick
     public class BoostPanel : SpawnObj
     {
         // If interacted, the player will move faster
-        protected override void Effect()
+        protected override void Effect(GameObject target)
         {
             foreach (TerrainMovement currTerrain in terrainGroups)
             {

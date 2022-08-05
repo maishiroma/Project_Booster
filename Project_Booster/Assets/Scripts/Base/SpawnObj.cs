@@ -57,12 +57,12 @@ namespace Gimmick
         {
             if (other.CompareTag(colliderTagCheck))
             {
-                Effect();
+                Effect(other.gameObject);
             }
         }
 
         // The method that all objects should implement, since this will be ran once the detection has hit
-        protected abstract void Effect();
+        protected abstract void Effect(GameObject target);
     }
 
 }

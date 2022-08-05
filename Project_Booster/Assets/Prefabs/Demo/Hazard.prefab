@@ -62,6 +62,7 @@ MonoBehaviour:
   colliderTagCheck: Player
   terrainGroupTag: TerrainGroup
   mainCameraTag: MainCamera
+  damageAmount: 0.25
 --- !u!1 &8260991258290838772
 GameObject:
   m_ObjectHideFlags: 0
