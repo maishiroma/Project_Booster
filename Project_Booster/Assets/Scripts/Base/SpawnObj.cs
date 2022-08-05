@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Visuals;
 using Effects;
+using Player;
 
 namespace Gimmick
 {
@@ -24,7 +25,8 @@ namespace Gimmick
 
         // protected Variables
         protected static TerrainMovement[] terrainGroups;       // An array of the terrain objects in the level; all boost panels share this information
-        protected static CameraMovement mainCamera;           // Ref to the main camera object
+        protected static CameraMovement mainCamera;             // Ref to the main camera object
+        protected static ScoreSystem scoreSystem;               // Ref to the scoring system of the game
 
         // This finds all of the terrain objects in the level and associates them to the private variable
         private void Start()
@@ -42,6 +44,11 @@ namespace Gimmick
             if (mainCamera == null)
             {
                 mainCamera = GameObject.FindGameObjectWithTag(mainCameraTag).GetComponent<CameraMovement>();
+            }
+
+            if (scoreSystem == null)
+            {
+                scoreSystem = GameObject.FindObjectOfType<ScoreSystem>();
             }
         }
 
