@@ -13,6 +13,8 @@ namespace Player
         [Tooltip("Text Display for the current combo the player is on")]
         public TextMeshProUGUI scoreComboText;
 
+        public TextMeshProUGUI finalScoreText;
+
         [Tooltip("How much time needs to pass before the combo is reset?")]
         public float comboDurationTimer;
         [Tooltip("How many combo strings does it take for a combo to start?")]
@@ -90,5 +92,9 @@ namespace Player
             scoreComboText.enabled = true;
         }
 
+        public void SetFinalScore()
+        {
+            finalScoreText.text = "Final Score: " + (int)scoreCounter;
+        }
     }
 }

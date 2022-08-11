@@ -9,6 +9,7 @@ namespace Player
     {
         public Slider healthBar;
         public Image healthBarForeground;
+        public GameObject gameOverVisuals;
 
         public Color fullHealth;
         public Color halfHealth;
@@ -16,6 +17,7 @@ namespace Player
 
         // Private Variables
         private float currHealth;
+        private bool isDead;
 
         public float CurrHealth
         {
@@ -37,11 +39,36 @@ namespace Player
             }
         }
 
+        public bool IsDead
+        {
+            get
+            {
+                if (currHealth <= 0f) { 
+                    return true; 
+                }
+                return false;
+            }
+        }
+
         private void Start()
         {
+            isDead = false;
             currHealth = 1f;
             healthBar.value = currHealth;
             healthBarForeground.color = fullHealth;
+            gameOverVisuals.SetActive(false);
+        }
+
+        private void Update()
+        {
+            if (!isDead)
+            {
+                if (currHealth <= 0f)
+                {
+                    gameOverVisuals.SetActive(true);
+                    isDead = true;
+                }
+            }
         }
 
         private void OnGUI()

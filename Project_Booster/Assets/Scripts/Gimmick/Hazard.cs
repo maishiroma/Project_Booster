@@ -22,7 +22,17 @@ namespace Gimmick
             
             if (target.GetComponent<Health>() != null)
             {
-                target.GetComponent<Health>().CurrHealth -= damageAmount;
+                Health playerHealth = target.GetComponent<Health>();
+                playerHealth.CurrHealth -= damageAmount;
+
+                if (playerHealth.IsDead)
+                {
+                    foreach (TerrainMovement currTerrain in terrainGroups)
+                    {
+                        currTerrain.CurrMoveSpeed = 0f;
+                    }
+                    scoreSystem.SetFinalScore();
+                }
             }
         }
     }
