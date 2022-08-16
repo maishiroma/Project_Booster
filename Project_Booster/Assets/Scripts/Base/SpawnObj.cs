@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using Visuals;
 using Effects;
-using Player;
+using ScreenGUI;
 
 namespace Gimmick
 {

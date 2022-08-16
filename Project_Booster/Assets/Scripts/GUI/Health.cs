@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-namespace Player
+namespace ScreenGUI
 {
     public class Health : MonoBehaviour
     {
@@ -74,19 +74,19 @@ namespace Player
         private void OnGUI()
         {
             healthBar.value = currHealth;
-            if (currHealth >= 0.75f)
-            {
-                healthBarForeground.color = fullHealth;
-            }
-            else if (currHealth >= 0.5f)
-            {
-                healthBarForeground.color = halfHealth;
-            }
-            else if (currHealth >= 0.25f)
+            if (currHealth <= 0.33f && currHealth > 0f)
             {
                 healthBarForeground.color = lowHealth;
             }
-            else if (currHealth <= 0f)
+            else if (currHealth >= 0.33f && currHealth <= 0.66f)
+            {
+                healthBarForeground.color = halfHealth;
+            }
+            else if (currHealth >= 0.66f)
+            {
+                healthBarForeground.color = fullHealth;
+            }
+            else
             {
                 healthBarForeground.color = new Color(lowHealth.r, lowHealth.g, lowHealth.b, 0f);
             }

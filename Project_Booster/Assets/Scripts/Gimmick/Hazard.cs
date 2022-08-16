@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Visuals;
-using Player;
+using ScreenGUI;
 
 namespace Gimmick
 {
