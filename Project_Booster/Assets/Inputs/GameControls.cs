@@ -97,6 +97,33 @@ namespace Player
                     ""isPartOfComposite"": true
                 }
             ]
+        },
+        {
+            ""name"": ""Menu"",
+            ""id"": ""c80b2011-15b6-44a1-9178-81dacdc671cd"",
+            ""actions"": [
+                {
+                    ""name"": ""RestartLevel"",
+                    ""type"": ""Button"",
+                    ""id"": ""6ba2492a-04b1-4bf5-8a18-2a9c95e641f1"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                }
+            ],
+            ""bindings"": [
+                {
+                    ""name"": """",
+                    ""id"": ""42af2121-50ed-40bf-9902-b83e4ef139f3"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""RestartLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                }
+            ]
         }
     ],
     ""controlSchemes"": [
@@ -116,6 +143,9 @@ namespace Player
             // Player
             m_Player = asset.FindActionMap("Player", throwIfNotFound: true);
             m_Player_HorizontalMovement = m_Player.FindAction("HorizontalMovement", throwIfNotFound: true);
+            // Menu
+            m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
+            m_Menu_RestartLevel = m_Menu.FindAction("RestartLevel", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -194,6 +224,39 @@ namespace Player
             }
         }
         public PlayerActions @Player => new PlayerActions(this);
+
+        // Menu
+        private readonly InputActionMap m_Menu;
+        private IMenuActions m_MenuActionsCallbackInterface;
+        private readonly InputAction m_Menu_RestartLevel;
+        public struct MenuActions
+        {
+            private @GameControls m_Wrapper;
+            public MenuActions(@GameControls wrapper) { m_Wrapper = wrapper; }
+            public InputAction @RestartLevel => m_Wrapper.m_Menu_RestartLevel;
+            public InputActionMap Get() { return m_Wrapper.m_Menu; }
+            public void Enable() { Get().Enable(); }
+            public void Disable() { Get().Disable(); }
+            public bool enabled => Get().enabled;
+            public static implicit operator InputActionMap(MenuActions set) { return set.Get(); }
+            public void SetCallbacks(IMenuActions instance)
+            {
+                if (m_Wrapper.m_MenuActionsCallbackInterface != null)
+                {
+                    @RestartLevel.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRestartLevel;
+                    @RestartLevel.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRestartLevel;
+                    @RestartLevel.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRestartLevel;
+                }
+                m_Wrapper.m_MenuActionsCallbackInterface = instance;
+                if (instance != null)
+                {
+                    @RestartLevel.started += instance.OnRestartLevel;
+                    @RestartLevel.performed += instance.OnRestartLevel;
+                    @RestartLevel.canceled += instance.OnRestartLevel;
+                }
+            }
+        }
+        public MenuActions @Menu => new MenuActions(this);
         private int m_KeyboardSchemeIndex = -1;
         public InputControlScheme KeyboardScheme
         {
@@ -206,6 +269,10 @@ namespace Player
         public interface IPlayerActions
         {
             void OnHorizontalMovement(InputAction.CallbackContext context);
+        }
+        public interface IMenuActions
+        {
+            void OnRestartLevel(InputAction.CallbackContext context);
         }
     }
 }

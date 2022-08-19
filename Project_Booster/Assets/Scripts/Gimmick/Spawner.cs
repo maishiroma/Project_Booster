@@ -1,4 +1,3 @@
-using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
@@ -22,6 +21,7 @@ namespace Gimmick
         public int minSpawnCount;
         [Tooltip("Max numb of objs that would be spawned")]
         public int maxSpawnCount;
+        public int rangeToSpawnBooster;
 
         // Private Variables
         private float timeToSpawn;      // How long does it take for another object to spawn?
@@ -91,7 +91,7 @@ namespace Gimmick
             foreach (int currChildIndex in spawnPosIndex)
             {
                 Transform selectedWayPoint = spawnPos[currChildIndex];
-                if (Random.Range(1,10) >= 7)
+                if (Random.Range(1,10) >= rangeToSpawnBooster)
                 {
                     // Boost Panel
                     GameObject.Instantiate(spawnObjPrefabs[0], selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
