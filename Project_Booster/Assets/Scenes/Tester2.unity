@@ -7940,6 +7940,7 @@ MonoBehaviour:
   maxTimeToSpawn: 4
   minSpawnCount: 1
   maxSpawnCount: 6
+  rangeToSpawnBooster: 8
 --- !u!4 &1645197436
 Transform:
   m_ObjectHideFlags: 0

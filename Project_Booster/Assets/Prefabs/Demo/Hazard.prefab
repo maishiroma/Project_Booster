@@ -58,7 +58,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168d6f544aea53c47aec9e2a7cd83196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectModifier: -99
+  effectModifier: -0.03
   colliderTagCheck: Player
   terrainGroupTag: TerrainGroup
   mainCameraTag: MainCamera
