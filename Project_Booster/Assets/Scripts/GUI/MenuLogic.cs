@@ -7,6 +7,10 @@ namespace ScreenGUI
 {
     public class MenuLogic : MonoBehaviour
     {
+        [Header("Level Vars")]
+        [Tooltip("The name of the main level to play")]
+        public string mainLevelName;
+
         // Private Variables
         private GameControls gameControls;                              // Ref to external control system to associate to this script
         private Health player;                                          // Ref to the player health component
@@ -20,6 +24,7 @@ namespace ScreenGUI
 
             // Then we can set up calllbacks to specific methods that we want the controls to listen to
             gameControls.Menu.RestartLevel.performed += ctx => RestartLevel(ctx);
+            gameControls.Menu.StartGame.performed += ctx => StartGame(ctx);
 
         }
 
@@ -28,7 +33,10 @@ namespace ScreenGUI
         {
             if (player == null)
             {
-                player = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+                if (GameObject.FindGameObjectWithTag("Player"))
+                {
+                    player = GameObject.FindGameObjectWithTag("Player").GetComponent<Health>();
+                }
             }
             isLoading = false;
         }
@@ -55,8 +63,19 @@ namespace ScreenGUI
                     isLoading = true;
                     GameManager.Instance.ReloadCurrentLevel();
                 }
-            }    
+            }
+        }
+
+        private void StartGame(InputAction.CallbackContext ctx)
+        {
+            if (!isLoading)
+            {
+                if (ctx.ReadValueAsButton())
+                {
+                    isLoading = true;
+                    GameManager.Instance.LoadSpecificLevel(mainLevelName);
+                }
+            }
         }
     }
-
 }

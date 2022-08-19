@@ -28,6 +28,12 @@ namespace Management
             string currScene = SceneManager.GetActiveScene().name;
             SceneManager.LoadScene(currScene);
         }
+
+        // Loads a specific level up
+        public void LoadSpecificLevel(string levelName)
+        {
+            SceneManager.LoadScene(levelName);
+        }
     }
 
 }
