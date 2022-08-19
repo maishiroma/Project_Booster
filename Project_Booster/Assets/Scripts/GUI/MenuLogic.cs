@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using Player;
@@ -9,9 +7,10 @@ namespace ScreenGUI
 {
     public class MenuLogic : MonoBehaviour
     {
+        // Private Variables
         private GameControls gameControls;                              // Ref to external control system to associate to this script
-        private Health player;
-        private bool isLoading;
+        private Health player;                                          // Ref to the player health component
+        private bool isLoading;                                         // Is the menu currently performing an operation?
 
         // Activates all of the controls for the player
         private void Awake()
@@ -24,6 +23,7 @@ namespace ScreenGUI
 
         }
 
+        // We first grab the player component with its health and set private vars upp
         private void Start()
         {
             if (player == null)
@@ -45,6 +45,7 @@ namespace ScreenGUI
             gameControls.Disable();
         }
 
+        // If we hit the specified button, and fulfill some of the requirements, we restart the level
         private void RestartLevel(InputAction.CallbackContext ctx)
         {
             if (player != null && !isLoading)

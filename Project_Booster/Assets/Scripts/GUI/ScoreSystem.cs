@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using TMPro;
 
@@ -12,7 +10,7 @@ namespace ScreenGUI
         public TextMeshProUGUI scoreText;
         [Tooltip("Text Display for the current combo the player is on")]
         public TextMeshProUGUI scoreComboText;
-
+        [Tooltip("Text Display for the final score count")]
         public TextMeshProUGUI finalScoreText;
 
         [Tooltip("How much time needs to pass before the combo is reset?")]
@@ -92,6 +90,7 @@ namespace ScreenGUI
             scoreComboText.enabled = true;
         }
 
+        // When called, we set up the final score counter up
         public void SetFinalScore()
         {
             finalScoreText.text = "Final Score: " + (int)scoreCounter;

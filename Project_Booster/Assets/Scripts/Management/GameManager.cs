@@ -1,5 +1,3 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.SceneManagement;
 
@@ -7,8 +5,10 @@ namespace Management
 {
     public class GameManager : MonoBehaviour
     {
-        public static GameManager Instance;
+        // Public Static Variabbles
+        public static GameManager Instance;     // Static Object Reference to this object
 
+        // Sets up the static public object and makes it persistent across levels
         private void Awake()
         {
             if (Instance == null)
@@ -22,6 +22,7 @@ namespace Management
             }
         }
 
+        // Quickly reloads the current scene
         public void ReloadCurrentLevel()
         {
             string currScene = SceneManager.GetActiveScene().name;
