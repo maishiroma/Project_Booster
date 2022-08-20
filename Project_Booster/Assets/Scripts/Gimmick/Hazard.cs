@@ -1,6 +1,7 @@
 using UnityEngine;
 using Visuals;
 using ScreenGUI;
+using Management;
 
 namespace Gimmick
 {
@@ -35,6 +36,7 @@ namespace Gimmick
                         currTerrain.CurrMoveSpeed = 0f;
                     }
                     scoreSystem.SetFinalScore();
+                    GameManager.Instance.GameStatus = GameStatus.GAME_OVER;
                 }
             }
         }

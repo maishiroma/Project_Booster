@@ -109,6 +109,22 @@ namespace Player
                     ""expectedControlType"": ""Button"",
                     ""processors"": """",
                     ""interactions"": """"
+                },
+                {
+                    ""name"": ""StartGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""61cde1c8-5109-47b3-849f-c38948143dd7"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
+                },
+                {
+                    ""name"": ""ExitGame"",
+                    ""type"": ""Button"",
+                    ""id"": ""569ec919-5bfc-4093-88eb-1f4c5e62cb02"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """"
                 }
             ],
             ""bindings"": [
@@ -120,6 +136,28 @@ namespace Player
                     ""processors"": """",
                     ""groups"": """",
                     ""action"": ""RestartLevel"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""b4a4bb87-2d99-4d6e-bf90-b46556527a99"",
+                    ""path"": ""<Keyboard>/space"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""StartGame"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""c9e12d4b-1c6d-4627-b64e-435592e94026"",
+                    ""path"": ""<Keyboard>/backspace"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""ExitGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
                 }
@@ -146,6 +184,8 @@ namespace Player
             // Menu
             m_Menu = asset.FindActionMap("Menu", throwIfNotFound: true);
             m_Menu_RestartLevel = m_Menu.FindAction("RestartLevel", throwIfNotFound: true);
+            m_Menu_StartGame = m_Menu.FindAction("StartGame", throwIfNotFound: true);
+            m_Menu_ExitGame = m_Menu.FindAction("ExitGame", throwIfNotFound: true);
         }
 
         public void Dispose()
@@ -229,11 +269,15 @@ namespace Player
         private readonly InputActionMap m_Menu;
         private IMenuActions m_MenuActionsCallbackInterface;
         private readonly InputAction m_Menu_RestartLevel;
+        private readonly InputAction m_Menu_StartGame;
+        private readonly InputAction m_Menu_ExitGame;
         public struct MenuActions
         {
             private @GameControls m_Wrapper;
             public MenuActions(@GameControls wrapper) { m_Wrapper = wrapper; }
             public InputAction @RestartLevel => m_Wrapper.m_Menu_RestartLevel;
+            public InputAction @StartGame => m_Wrapper.m_Menu_StartGame;
+            public InputAction @ExitGame => m_Wrapper.m_Menu_ExitGame;
             public InputActionMap Get() { return m_Wrapper.m_Menu; }
             public void Enable() { Get().Enable(); }
             public void Disable() { Get().Disable(); }
@@ -246,6 +290,12 @@ namespace Player
                     @RestartLevel.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnRestartLevel;
                     @RestartLevel.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnRestartLevel;
                     @RestartLevel.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnRestartLevel;
+                    @StartGame.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartGame;
+                    @StartGame.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartGame;
+                    @StartGame.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnStartGame;
+                    @ExitGame.started -= m_Wrapper.m_MenuActionsCallbackInterface.OnExitGame;
+                    @ExitGame.performed -= m_Wrapper.m_MenuActionsCallbackInterface.OnExitGame;
+                    @ExitGame.canceled -= m_Wrapper.m_MenuActionsCallbackInterface.OnExitGame;
                 }
                 m_Wrapper.m_MenuActionsCallbackInterface = instance;
                 if (instance != null)
@@ -253,6 +303,12 @@ namespace Player
                     @RestartLevel.started += instance.OnRestartLevel;
                     @RestartLevel.performed += instance.OnRestartLevel;
                     @RestartLevel.canceled += instance.OnRestartLevel;
+                    @StartGame.started += instance.OnStartGame;
+                    @StartGame.performed += instance.OnStartGame;
+                    @StartGame.canceled += instance.OnStartGame;
+                    @ExitGame.started += instance.OnExitGame;
+                    @ExitGame.performed += instance.OnExitGame;
+                    @ExitGame.canceled += instance.OnExitGame;
                 }
             }
         }
@@ -273,6 +329,8 @@ namespace Player
         public interface IMenuActions
         {
             void OnRestartLevel(InputAction.CallbackContext context);
+            void OnStartGame(InputAction.CallbackContext context);
+            void OnExitGame(InputAction.CallbackContext context);
         }
     }
 }
