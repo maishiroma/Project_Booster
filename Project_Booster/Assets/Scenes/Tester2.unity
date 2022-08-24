@@ -8069,14 +8069,16 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   spawnObjPrefabs:
-  - {fileID: 6281583940021087550, guid: 81c60ec9a86bc504081b38f7e51b5127, type: 3}
-  - {fileID: 2061984222319741365, guid: 6a4fa33113c325e4bbdf413fb12b29b6, type: 3}
+  - {fileID: 3262491240028772347, guid: b328d72e2af3b994f95b6247e66e8727, type: 3}
+  - {fileID: 672198934525781940, guid: e7003d8bb7462cd4990a5e4ce21e117c, type: 3}
+  - {fileID: 672198934525781940, guid: f5e81797c46483d49aa98eb5495eba1b, type: 3}
+  - {fileID: 3262491240028772347, guid: ab480859394a3de4f8b85f9a08631e0f, type: 3}
+  - {fileID: 3262491240028772347, guid: 01fd8e1c31fc84745add4ceff3acde9e, type: 3}
   cleanupObj: {fileID: 1766600683}
   minTimeToSpawn: 2
-  maxTimeToSpawn: 4
+  maxTimeToSpawn: 3
   minSpawnCount: 1
   maxSpawnCount: 6
-  rangeToSpawnBooster: 8
 --- !u!4 &1645197436
 Transform:
   m_ObjectHideFlags: 0
