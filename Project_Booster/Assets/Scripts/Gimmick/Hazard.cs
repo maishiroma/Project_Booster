@@ -13,30 +13,34 @@ namespace Gimmick
         // If interacted, the player will move slower
         protected override void Effect(GameObject target)
         {
-            foreach (TerrainMovement currTerrain in terrainGroups)
-            {
-                currTerrain.CurrMoveSpeed += effectModifier;
-            }
-
-            // We cancel the camera effect and restart the score counter
-            mainCamera.IsBoosting = false;
-            scoreSystem.ResetComboTime();
-            
-            // We also perform some health check operations
             if (target.GetComponent<Health>() != null)
             {
                 Health playerHealth = target.GetComponent<Health>();
-                playerHealth.CurrHealth -= damageAmount;
-
-                // If the player lost all of their health after that one hit, we set up the game over logic
-                if (playerHealth.IsDead)
+                if (!playerHealth.IsInvincible)
                 {
-                    foreach (TerrainMovement currTerrain in terrainGroups)
+                    // If the player lost all of their health after that one hit, we set up the game over logic
+                    playerHealth.CurrHealth -= damageAmount;
+                    if (playerHealth.IsDead)
                     {
-                        currTerrain.CurrMoveSpeed = 0f;
+                        foreach (TerrainMovement currTerrain in terrainGroups)
+                        {
+                            currTerrain.CurrMoveSpeed = 0f;
+                        }
+                        scoreSystem.SetFinalScore();
+                        GameManager.Instance.GameStatus = GameStatus.GAME_OVER;
                     }
-                    scoreSystem.SetFinalScore();
-                    GameManager.Instance.GameStatus = GameStatus.GAME_OVER;
+                    else
+                    {
+                        // The player is slowed down
+                        foreach (TerrainMovement currTerrain in terrainGroups)
+                        {
+                            currTerrain.CurrMoveSpeed += effectModifier;
+                        }
+
+                        // We cancel the camera effect and restart the score counter
+                        mainCamera.IsBoosting = false;
+                        scoreSystem.ResetComboTime();
+                    }
                 }
             }
         }

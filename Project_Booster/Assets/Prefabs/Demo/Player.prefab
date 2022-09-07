@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 7493702563431961936}
   - component: {fileID: 7493702563431961939}
   - component: {fileID: 7493702563431961965}
+  - component: {fileID: 1738444759}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -82,12 +83,32 @@ MonoBehaviour:
   - {fileID: 0}
   - {fileID: 0}
   - {fileID: 0}
-  - {fileID: 0}
-  - {fileID: 0}
   accelerationSpeed: 0.2
   stopSpeed: 0.1
   maxAcceleration: 0.3
   currNodeIndex: 0
+--- !u!114 &1738444759
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7493702563431961964}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: acf3e5e31565d254ba0c5b162a4d0c95, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  timeForInvincibility: 3
+  invincibilityVisualMaxAlpha: 0.8
+  lerpToMaxAlpha: 0.02
+  invincibilityVisual: {fileID: 0}
+  healthBar: {fileID: 0}
+  healthBarForeground: {fileID: 0}
+  gameOverVisuals: {fileID: 0}
+  fullHealth: {r: 0, g: 0.9622642, b: 0.07923788, a: 1}
+  halfHealth: {r: 0.9811321, g: 0.8487221, b: 0.1610537, a: 1}
+  lowHealth: {r: 1, g: 0, b: 0, a: 1}
 --- !u!1 &7493702564082053101
 GameObject:
   m_ObjectHideFlags: 0
