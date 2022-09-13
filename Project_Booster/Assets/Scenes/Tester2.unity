@@ -1285,7 +1285,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
   minMoveSpeed: 0.1
-  currMoveSpeed: 0.1
+  currMoveSpeed: 0.3
 --- !u!54 &263710966
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -2041,7 +2041,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   m_Material: {fileID: 0}
-  m_Color: {r: 0.7264151, g: 0.25630116, b: 0.25630116, a: 0.6666667}
+  m_Color: {r: 0.7264151, g: 0.25630116, b: 0.25630116, a: 0.39215687}
   m_RaycastTarget: 1
   m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
   m_Maskable: 1
@@ -5680,7 +5680,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
   minMoveSpeed: 0.1
-  currMoveSpeed: 0.1
+  currMoveSpeed: 0.3
 --- !u!54 &1100291153
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -7067,6 +7067,10 @@ PrefabInstance:
       propertyPath: invincibilityVisual
       value: 
       objectReference: {fileID: 367886474}
+    - target: {fileID: 1738444759, guid: 80363e8fd2566b946a5160ed11dd1367, type: 3}
+      propertyPath: invincibilityVisualMaxAlpha
+      value: 0.6
+      objectReference: {fileID: 0}
     - target: {fileID: 7493702563431961938, guid: 80363e8fd2566b946a5160ed11dd1367, type: 3}
       propertyPath: m_RootOrder
       value: 2
@@ -8159,6 +8163,7 @@ MonoBehaviour:
   maxTimeToSpawn: 3
   minSpawnCount: 1
   maxSpawnCount: 6
+  modCounter: 0.02
 --- !u!4 &1645197436
 Transform:
   m_ObjectHideFlags: 0
@@ -8636,7 +8641,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
   minMoveSpeed: 0.1
-  currMoveSpeed: 0.1
+  currMoveSpeed: 0.3
 --- !u!54 &1753992951
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9378,7 +9383,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
   minMoveSpeed: 0.1
-  currMoveSpeed: 0.1
+  currMoveSpeed: 0.3
 --- !u!54 &1908739079
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -9741,8 +9746,8 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
-  minMoveSpeed: 0.1
-  currMoveSpeed: 0.1
+  minMoveSpeed: 0.3
+  currMoveSpeed: 0.3
 --- !u!4 &1955874493
 Transform:
   m_ObjectHideFlags: 0
@@ -9919,7 +9924,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   maxMoveSpeed: 1
   minMoveSpeed: 0.1
-  currMoveSpeed: 0.1
+  currMoveSpeed: 0.3
 --- !u!54 &1966563037
 Rigidbody:
   m_ObjectHideFlags: 0
@@ -10203,11 +10208,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac3fe30537a8123488ee460ec0954c86, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  spawnerObj: {fileID: 1645197435}
   scoreText: {fileID: 1604084654}
   scoreComboText: {fileID: 1256647247}
   finalScoreText: {fileID: 468619528}
   comboDurationTimer: 10
   comboStart: 1
+  spawnIncreaseCap: 100
 --- !u!1 &2088374069
 GameObject:
   m_ObjectHideFlags: 0

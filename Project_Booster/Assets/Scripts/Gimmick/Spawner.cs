@@ -22,6 +22,8 @@ namespace Gimmick
         [Tooltip("Max numb of objs that would be spawned")]
         public int maxSpawnCount;
 
+        public float modCounter;
+
         // Private Variables
         private float timeToSpawn;      // How long does it take for another object to spawn?
         private float currTimePassed;   // How much time has passed since the last object spawned?
@@ -95,6 +97,13 @@ namespace Gimmick
                 Transform selectedWayPoint = spawnPos[index];
                 GameObject.Instantiate(ranPattern.transform.GetChild(index), selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
             }
+        }
+
+        // Called externally, this increases the difficulty by changing the spawn rates
+        public void IncreaseSpawnFrequency()
+        {
+            minTimeToSpawn = Mathf.Clamp(minTimeToSpawn - modCounter, 1f, minTimeToSpawn);
+            maxTimeToSpawn = Mathf.Clamp(maxTimeToSpawn - modCounter, 2f, maxTimeToSpawn);
         }
     }
 }

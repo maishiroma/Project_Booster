@@ -1,10 +1,15 @@
 using UnityEngine;
 using TMPro;
+using Gimmick;
 
 namespace ScreenGUI
 {
     public class ScoreSystem : MonoBehaviour
     {
+        [Header("External Refs")]
+        [Tooltip("Ref to the external spawner obj")]
+        public Spawner spawnerObj;
+
         [Header("GUI Variables")]
         [Tooltip("Text Display for the score")]
         public TextMeshProUGUI scoreText;
@@ -13,27 +18,32 @@ namespace ScreenGUI
         [Tooltip("Text Display for the final score count")]
         public TextMeshProUGUI finalScoreText;
 
+        [Header("General Vars")]
         [Tooltip("How much time needs to pass before the combo is reset?")]
         public float comboDurationTimer;
         [Tooltip("How many combo strings does it take for a combo to start?")]
         public int comboStart;
+        [Tooltip("The amount that the score needs to increase from the currSpawnIncreaseCap to increase spawn rate")]
+        public int spawnIncreaseCap;
 
         // Private Variables
         private float scoreCounter;         // The actual score counter
         private int scoreComboAmount;       // How much of a combo counter is on
         private float currComboDuration;    // The current duration of the current combo
+        private int currSpawnIncreaseCap;   // The current score to "beat" in order to increase the difficulty
 
         // Sets up the private variables
         private void Start()
         {
             scoreCounter = 0;
+            currSpawnIncreaseCap = spawnIncreaseCap;
             ResetComboTime();
         }
 
         // Handles the logic of tallying the score
         private void Update()
         {
-            if (scoreComboAmount > 0)
+            if (scoreComboAmount > comboStart)
             {
                 scoreCounter += Time.deltaTime * scoreComboAmount;
                 currComboDuration += Time.deltaTime;
@@ -46,8 +56,14 @@ namespace ScreenGUI
                 {
                     ResetComboTime();
                 }
+
+                // Once the score hits a specific cap, we increase the difficulty
+                if (scoreCounter > currSpawnIncreaseCap)
+                {
+                    currSpawnIncreaseCap += spawnIncreaseCap;
+                    spawnerObj.IncreaseSpawnFrequency();
+                }
             }
-            
         }
 
         // Updates to GUI
