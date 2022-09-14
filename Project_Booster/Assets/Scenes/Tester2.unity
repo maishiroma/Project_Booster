@@ -7068,6 +7068,10 @@ PrefabInstance:
       value: 
       objectReference: {fileID: 367886474}
     - target: {fileID: 1738444759, guid: 80363e8fd2566b946a5160ed11dd1367, type: 3}
+      propertyPath: timeForInvincibility
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 1738444759, guid: 80363e8fd2566b946a5160ed11dd1367, type: 3}
       propertyPath: invincibilityVisualMaxAlpha
       value: 0.6
       objectReference: {fileID: 0}
@@ -8163,7 +8167,7 @@ MonoBehaviour:
   maxTimeToSpawn: 3
   minSpawnCount: 1
   maxSpawnCount: 6
-  modCounter: 0.02
+  modCounter: 0.2
 --- !u!4 &1645197436
 Transform:
   m_ObjectHideFlags: 0
@@ -10212,9 +10216,9 @@ MonoBehaviour:
   scoreText: {fileID: 1604084654}
   scoreComboText: {fileID: 1256647247}
   finalScoreText: {fileID: 468619528}
-  comboDurationTimer: 10
+  comboDurationTimer: 5
   comboStart: 1
-  spawnIncreaseCap: 100
+  spawnIncreaseCap: 50
 --- !u!1 &2088374069
 GameObject:
   m_ObjectHideFlags: 0

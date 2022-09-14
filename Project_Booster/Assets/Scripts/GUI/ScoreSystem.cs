@@ -1,6 +1,7 @@
 using UnityEngine;
 using TMPro;
 using Gimmick;
+using System.Collections;
 
 namespace ScreenGUI
 {
@@ -43,17 +44,19 @@ namespace ScreenGUI
         // Handles the logic of tallying the score
         private void Update()
         {
-            if (scoreComboAmount > comboStart)
+            if (scoreComboAmount > 0)
             {
                 scoreCounter += Time.deltaTime * scoreComboAmount;
                 currComboDuration += Time.deltaTime;
 
-                if (comboDurationTimer - currComboDuration < 1f)
+                if (comboDurationTimer - currComboDuration < 1f && !IsInvoking("FlashText"))
                 {
-                    InvokeRepeating("EnableText", 0.1f, 0.5f);
+                    // Warning to let player know the combo is about to end
+                    StartCoroutine("FlashText");
                 }
                 if (currComboDuration >= comboDurationTimer)
                 {
+                    // Once the combo is over, the combo timer is reset
                     ResetComboTime();
                 }
 
@@ -80,9 +83,23 @@ namespace ScreenGUI
             }
         }
 
-        private void EnableText()
+        // Coroutine that flashes the combo meter to the player
+        private IEnumerator FlashText()
         {
-            scoreComboText.enabled = !scoreComboText.enabled;
+            Color transparentColor = new Color(scoreComboText.color.r, scoreComboText.color.g, scoreComboText.color.b, 0.3f);
+            Color currColor = scoreComboText.color;
+            yield return new WaitForFixedUpdate();
+
+            while (comboDurationTimer - currComboDuration > 0f)
+            {
+                scoreComboText.color = transparentColor;
+                yield return new WaitForEndOfFrame();
+                scoreComboText.color = currColor;
+                yield return new WaitForEndOfFrame();
+            }
+
+            scoreComboText.color = currColor;
+            yield return null;
         }
 
         // When called, we increment the combo meter
@@ -90,20 +107,19 @@ namespace ScreenGUI
         {
             if (currComboDuration < comboDurationTimer)
             {
-                CancelInvoke("EnableText");
                 currComboDuration = 0f;
                 scoreComboAmount += 1;
-                scoreComboText.enabled = true;
+                StopCoroutine("FlashText");
+                scoreComboText.color = new Color(scoreComboText.color.r, scoreComboText.color.g, scoreComboText.color.b, 1f);
             }
         }
 
         // When called, we reset the combo stats
         public void ResetComboTime()
         {
-            CancelInvoke("EnableText");
             currComboDuration = 0f;
             scoreComboAmount = 0;
-            scoreComboText.enabled = true;
+            scoreComboText.color = new Color(scoreComboText.color.r, scoreComboText.color.g, scoreComboText.color.b, 1f);
         }
 
         // When called, we set up the final score counter up
