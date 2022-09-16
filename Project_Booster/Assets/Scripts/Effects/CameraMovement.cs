@@ -2,6 +2,14 @@ using UnityEngine;
 
 namespace Effects
 {
+
+    public enum CameraDirection
+    {
+        FRONT,
+        LEFT,
+        RIGHT
+    }
+
     public class CameraMovement : MonoBehaviour
     {
         [Header("Boost Effect Variables")]
@@ -11,6 +19,8 @@ namespace Effects
         public float transitionAccceleration;
         [Tooltip("The duration of the boost effect")]
         public float maxTimeBoostEffect;
+        public float turnSpeed;
+        public float turnFreq;
 
         [Header("Camera Shaking Variables")]
         [Range(0.01f, 1f)]
@@ -23,6 +33,8 @@ namespace Effects
         private bool isBoosting;        // Is the camera in a boost state?
         private float origFOV;          // Ref to the original FOV
         private float timeBoostEffect;  // The amount of time that the player is in a boost state
+        private float timeToTurn;
+        private CameraDirection currDirection;
 
         // Getter/Setter for IsBoosting
         public bool IsBoosting
@@ -50,6 +62,7 @@ namespace Effects
             mainCamera = GetComponent<Camera>();
             origFOV = mainCamera.fieldOfView;
             isBoosting = false;
+            currDirection = CameraDirection.FRONT;
 
             origCameraPos = gameObject.transform.position;
         }
@@ -72,16 +85,11 @@ namespace Effects
                 {
                     isBoosting = false;
                     timeBoostEffect = 0f;
+                    gameObject.transform.position = origCameraPos;
                 }
             }
             else
-            {
-                // Moving the camera back to start
-                if (gameObject.transform.position != origCameraPos)
-                {
-                    gameObject.transform.position = origCameraPos;
-                }
-                
+            {  
                 // FOV Moving back to start
                 if (!Mathf.Approximately(mainCamera.fieldOfView, origFOV))
                 {
@@ -92,6 +100,58 @@ namespace Effects
                     mainCamera.fieldOfView = origFOV;
                 }
             }
+
+            timeToTurn += Time.deltaTime;
+            if (timeToTurn > turnFreq)
+            {
+                RandomTurn();
+                timeToTurn = 0f;
+            }
+            else
+            {
+                CameraMockTurning();
+            }
+        }
+
+        private void RandomTurn()
+        {
+            int ranNumb = Random.Range(0, 3);
+            switch(ranNumb)
+            {
+                case 0:
+                    currDirection = CameraDirection.FRONT;
+                    break;
+                case 1:
+                    currDirection = CameraDirection.LEFT;
+                    break;
+                case 2:
+                    currDirection = CameraDirection.RIGHT;
+                    break;
+                default:
+                    currDirection = CameraDirection.FRONT;
+                    break;
+            }
+        }
+
+        private void CameraMockTurning()
+        {
+            Quaternion newDir = Quaternion.identity;
+            switch(currDirection)
+            {
+                case CameraDirection.FRONT:
+                    newDir = Quaternion.Euler(0f, 0f, 0f);
+                    break;
+                case CameraDirection.LEFT:
+                    newDir = Quaternion.Euler(0f, 15f, 0f);
+                    break;
+                case CameraDirection.RIGHT:
+                    newDir = Quaternion.Euler(0f, -15f, 0f);
+                    break;
+                default:
+                    newDir = Quaternion.Euler(0f, 0f, 0f);
+                    break;
+            }
+            gameObject.transform.rotation = Quaternion.Lerp(mainCamera.transform.rotation, newDir, Time.fixedDeltaTime * turnSpeed);
         }
     }
 }

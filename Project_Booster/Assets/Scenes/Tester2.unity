@@ -7636,6 +7636,8 @@ MonoBehaviour:
   boostFOV: 100
   transitionAccceleration: 2
   maxTimeBoostEffect: 5
+  turnSpeed: 4
+  turnFreq: 5
   shakeFrequency: 0.1
 --- !u!1 &1590987614
 GameObject:
@@ -8143,7 +8145,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!114 &1645197435
 MonoBehaviour:
   m_ObjectHideFlags: 0
