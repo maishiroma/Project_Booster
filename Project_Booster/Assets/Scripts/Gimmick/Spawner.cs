@@ -6,8 +6,8 @@ namespace Gimmick
     public class Spawner : MonoBehaviour
     {
         [Header("External References")]
-        [Tooltip("Reference to the prefab that holds information on the Boost Panel")]
-        public SpawnObj[] spawnObjPrefabs;
+        [Tooltip("Reference to the prefab that holds information on what can be spawned")]
+        public GameObject[] spawnObjPrefabs;
 
         [Tooltip("Reference to the object that will be spawning objects in the level")]
         public TerrainParallexScroll cleanupObj;
@@ -21,7 +21,8 @@ namespace Gimmick
         public int minSpawnCount;
         [Tooltip("Max numb of objs that would be spawned")]
         public int maxSpawnCount;
-        public int rangeToSpawnBooster;
+
+        public float modCounter;
 
         // Private Variables
         private float timeToSpawn;      // How long does it take for another object to spawn?
@@ -87,21 +88,22 @@ namespace Gimmick
         // We spawn objects at their corresponding locations that we found earlier
         private void SpawnObjects()
         {
-            // TODO: Once I get the hazard in, we need to make some logic to randomly choose between hazards and boost panels
-            foreach (int currChildIndex in spawnPosIndex)
+            // We first select a random order in the list
+            GameObject ranPattern = spawnObjPrefabs[(int)Random.Range(0, spawnObjPrefabs.Length)];
+            for (int index = 0; index < ranPattern.transform.childCount; index++)
             {
-                Transform selectedWayPoint = spawnPos[currChildIndex];
-                if (Random.Range(1,10) >= rangeToSpawnBooster)
-                {
-                    // Boost Panel
-                    GameObject.Instantiate(spawnObjPrefabs[0], selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
-                }
-                else
-                {
-                    // Hazard
-                    GameObject.Instantiate(spawnObjPrefabs[1], selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
-                }
+                // We then take each child of the ran object (which contains patterns) and place it in a corresponding location
+                // according to the spawn list here
+                Transform selectedWayPoint = spawnPos[index];
+                GameObject.Instantiate(ranPattern.transform.GetChild(index), selectedWayPoint.position, selectedWayPoint.rotation, selectedWayPoint);
             }
+        }
+
+        // Called externally, this increases the difficulty by changing the spawn rates
+        public void IncreaseSpawnFrequency()
+        {
+            minTimeToSpawn = Mathf.Clamp(minTimeToSpawn - modCounter, 1f, minTimeToSpawn);
+            maxTimeToSpawn = Mathf.Clamp(maxTimeToSpawn - modCounter, 2f, maxTimeToSpawn);
         }
     }
 }

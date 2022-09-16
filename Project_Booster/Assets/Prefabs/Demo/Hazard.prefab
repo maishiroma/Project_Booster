@@ -58,11 +58,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 168d6f544aea53c47aec9e2a7cd83196, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  effectModifier: -0.03
+  effectModifier: 0.33
   colliderTagCheck: Player
   terrainGroupTag: TerrainGroup
   mainCameraTag: MainCamera
-  damageAmount: 0.33
 --- !u!1 &8260991258290838772
 GameObject:
   m_ObjectHideFlags: 0

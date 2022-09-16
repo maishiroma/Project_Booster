@@ -22,13 +22,16 @@ namespace Gimmick
         public string mainCameraTag;
 
         // protected Variables
-        protected static TerrainMovement[] terrainGroups;       // An array of the terrain objects in the level; all boost panels share this information
+        protected TerrainMovement[] terrainGroups;       // An array of the terrain objects in the level; all boost panels share this information
         protected static CameraMovement mainCamera;             // Ref to the main camera object
         protected static ScoreSystem scoreSystem;               // Ref to the scoring system of the game
 
         // This finds all of the terrain objects in the level and associates them to the private variable
         private void Start()
         {
+            // There is an isue getting this to work with a staticc variable
+            // The original value does not get removed when a level is loaded
+            // as such, this group is NULL but not really null
             if (terrainGroups == null)
             {
                 GameObject[] temp = GameObject.FindGameObjectsWithTag(terrainGroupTag);
