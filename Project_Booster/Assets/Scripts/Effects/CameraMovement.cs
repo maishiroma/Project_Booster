@@ -19,8 +19,14 @@ namespace Effects
         public float transitionAccceleration;
         [Tooltip("The duration of the boost effect")]
         public float maxTimeBoostEffect;
+        
+        [Tooltip("How fast does the camera turn?")]
         public float turnSpeed;
-        public float turnFreq;
+        [Tooltip("How often does the camera actually turn?")]
+        [Range(10, 99)]
+        public float chanceToTurn;
+        [Tooltip("The time frequency to have a chance to turn")]
+        public float turnRepeating;
 
         [Header("Camera Shaking Variables")]
         [Range(0.01f, 1f)]
@@ -28,13 +34,12 @@ namespace Effects
         public float shakeFrequency;
 
         // Private Variables
+        private CameraDirection currDirection;  // The current camerDirection
         private Camera mainCamera;      // Ref to the main camera component
         private Vector3 origCameraPos;  // The original camera position
         private bool isBoosting;        // Is the camera in a boost state?
         private float origFOV;          // Ref to the original FOV
         private float timeBoostEffect;  // The amount of time that the player is in a boost state
-        private float timeToTurn;
-        private CameraDirection currDirection;
 
         // Getter/Setter for IsBoosting
         public bool IsBoosting
@@ -63,8 +68,9 @@ namespace Effects
             origFOV = mainCamera.fieldOfView;
             isBoosting = false;
             currDirection = CameraDirection.FRONT;
-
             origCameraPos = gameObject.transform.position;
+
+            InvokeRepeating("PerformRandomTurns", turnRepeating, turnRepeating);
         }
 
         // Handles Camera Shaking and FOV changing
@@ -100,19 +106,20 @@ namespace Effects
                     mainCamera.fieldOfView = origFOV;
                 }
             }
+            CameraMockTurning();
+        }
 
-            timeToTurn += Time.deltaTime;
-            if (timeToTurn > turnFreq)
+        // If we generate a random number and the number is in the range that we set,
+        // We randomly turn on the spot
+        private void PerformRandomTurns()
+        {
+            if (Random.Range(0, 101) < chanceToTurn)
             {
                 RandomTurn();
-                timeToTurn = 0f;
-            }
-            else
-            {
-                CameraMockTurning();
             }
         }
 
+        // When called, sets currDirection to a random turn
         private void RandomTurn()
         {
             int ranNumb = Random.Range(0, 3);
@@ -133,6 +140,7 @@ namespace Effects
             }
         }
 
+        // When called, sets the rotation of the camera to be whatever the current rotation is at
         private void CameraMockTurning()
         {
             Quaternion newDir = Quaternion.identity;
